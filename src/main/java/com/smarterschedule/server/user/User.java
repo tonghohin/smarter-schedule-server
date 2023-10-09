@@ -1,9 +1,15 @@
 package com.smarterschedule.server.user;
 
+import java.util.List;
+
+import com.smarterschedule.server.availability.Availability;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -12,7 +18,7 @@ public class User {
     @Column(name = "user_id")
     private @Id @GeneratedValue Long id;
 
-    @Column(name = "uid", nullable = false, unique = true)
+    @Column(name = "uid", nullable = false, unique = true, updatable = false)
     private String uid;
 
     @Column(name = "name", nullable = false)
@@ -20,6 +26,9 @@ public class User {
 
     @Column(name = "phone", nullable = false)
     private String phone;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Availability> availability;
 
     User() {
     }
@@ -46,6 +55,10 @@ public class User {
         return this.phone;
     }
 
+    public List<Availability> getAvailability() {
+        return this.availability;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -60,6 +73,10 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setAvailability(List<Availability> availability) {
+        this.availability = availability;
     }
 
     @Override

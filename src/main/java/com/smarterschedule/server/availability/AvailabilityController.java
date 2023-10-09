@@ -10,20 +10,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.smarterschedule.server.user.User;
+import com.smarterschedule.server.user.UserService;
+
 @RestController
 @RequestMapping("/availability")
 public class AvailabilityController {
     @Autowired
     private AvailabilityService availabilityService;
 
+    @Autowired
+    private UserService userService;
+
     @GetMapping("/{uid}")
     public List<Availability> getAvailabilities(@PathVariable String uid) {
-        System.out.println(availabilityService.getAvailability(uid));
         return availabilityService.getAvailability(uid);
     }
 
-    @PostMapping
-    public List<Availability> updateAvailability(@RequestBody List<Availability> availability) {
+    @PostMapping("/{uid}")
+    public List<Availability> updateAvailability(@PathVariable String uid,
+            @RequestBody List<Availability> availability) {
+        User user = userService.getUserByUid(uid);
+        for (Availability day : availability) {
+            day.setUser(user);
+        }
         return availabilityService.updateAvailability(availability);
     }
 

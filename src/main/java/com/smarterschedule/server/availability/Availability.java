@@ -2,6 +2,7 @@ package com.smarterschedule.server.availability;
 
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.smarterschedule.server.user.User;
 
 import jakarta.persistence.Column;
@@ -32,6 +33,7 @@ public class Availability {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     Availability() {
