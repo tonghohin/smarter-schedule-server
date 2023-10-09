@@ -1,1 +1,1 @@
-# smarter-schedule-server
+# Server side code for Smarter Schedule
