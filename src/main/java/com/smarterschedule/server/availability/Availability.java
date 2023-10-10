@@ -3,6 +3,7 @@ package com.smarterschedule.server.availability;
 import java.time.LocalTime;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.smarterschedule.server.student.Student;
 import com.smarterschedule.server.user.User;
 
 import jakarta.persistence.Column;
@@ -35,6 +36,11 @@ public class Availability {
     @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "student_id", nullable = false)
+    @JsonIgnore
+    private Student student;
 
     Availability() {
     }
@@ -94,10 +100,18 @@ public class Availability {
         this.user = user;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
     @Override
     public String toString() {
         return "Availability [id=" + id + ", day=" + day + ", from=" + from + ", to=" + to + ", available=" + available
-                + ", userId=" + user.getId() + "]";
+                + ", user=" + user + ", student=" + student + "]";
     }
 
 }
