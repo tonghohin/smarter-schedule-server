@@ -33,12 +33,12 @@ public class Availability {
     private Boolean available;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = true)
     @JsonIgnore
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = false)
+    @JoinColumn(name = "student_id", nullable = true)
     @JsonIgnore
     private Student student;
 

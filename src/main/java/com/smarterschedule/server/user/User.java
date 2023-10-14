@@ -3,6 +3,7 @@ package com.smarterschedule.server.user;
 import java.util.List;
 
 import com.smarterschedule.server.availability.Availability;
+import com.smarterschedule.server.student.Student;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -29,6 +30,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Availability> availability;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Student> students;
 
     User() {
     }

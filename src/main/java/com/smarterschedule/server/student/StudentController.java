@@ -8,29 +8,47 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.smarterschedule.server.availability.Availability;
+import com.smarterschedule.server.availability.AvailabilityService;
+import com.smarterschedule.server.user.User;
+import com.smarterschedule.server.user.UserService;
+
+@RestController
+@RequestMapping("/students")
 public class StudentController {
     @Autowired
     private StudentService studentService;
 
-    @GetMapping
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    @Autowired
+    private AvailabilityService availabilityService;
+
+    @Autowired
+    private UserService userService;
+
+    @PostMapping("/{uid}")
+    public Student createStudent(@RequestBody Student newStudent, @PathVariable String uid) {
+        Student student = new Student(newStudent.getName(), newStudent.getPhone(), newStudent.getEmail());
+        User user = userService.getUserByUid(uid);
+        student.setUser(user);
+        Student createdStudent = studentService.createStudent(student);
+        List<Availability> availability = newStudent.getAvailability();
+        availabilityService.createAvailability(createdStudent, availability);
+        return createdStudent;
     }
 
-    @GetMapping("/{studentId}")
-    public Student getStudentById(@PathVariable Long studentId) {
-        return studentService.getStudentById(studentId);
+    @GetMapping("/{uid}")
+    public List<Student> getStudentsByUserId(@PathVariable String uid) {
+        User user = userService.getUserByUid(uid);
+        return studentService.getStudentsByUserId(user.getId());
     }
 
-    @PostMapping
-    public Student createStudent(Student newStudent) {
-        return studentService.createStudent(newStudent);
-    }
-
-    @PutMapping("/{studentId}")
-    public Student updateStudent(Student newStudent, @PathVariable Long studentId) {
-        return studentService.updateStudent(newStudent, studentId);
+    @PutMapping
+    public Student updateStudent(@RequestBody Student newStudent) {
+        return studentService.updateStudent(newStudent);
     }
 
     @DeleteMapping("/{studentId}")

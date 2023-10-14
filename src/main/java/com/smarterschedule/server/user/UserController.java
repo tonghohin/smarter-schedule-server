@@ -27,16 +27,16 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{uid}")
-    public User getUserByUid(@PathVariable String uid) {
-        return userService.getUserByUid(uid);
-    }
-
     @PostMapping
     public User createUser(@RequestBody User newUser) {
         User createdUser = userService.createUser(newUser);
         availabilityService.createDefaultAvailability(createdUser);
         return createdUser;
+    }
+
+    @GetMapping("/{uid}")
+    public User getUserByUid(@PathVariable String uid) {
+        return userService.getUserByUid(uid);
     }
 
     @PutMapping("/{uid}")

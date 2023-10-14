@@ -4,13 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class StudentService {
     @Autowired
     private StudentRepository studentRepository;
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAll();
+    public List<Student> getStudentsByUserId(Long userId) {
+        return studentRepository.findByUserId(userId);
     }
 
     public Student getStudentById(Long studentId) {
@@ -22,15 +24,9 @@ public class StudentService {
         return studentRepository.save(newStudent);
     }
 
-    public Student updateStudent(Student newStudent, Long studentId) {
-        return studentRepository.findById(studentId).map(student -> {
-            student.setName(newStudent.getName());
-            student.setPhone(newStudent.getPhone());
-            student.setEmail(newStudent.getEmail());
-            return studentRepository.save(student);
-        }).orElseGet(() -> {
-            return studentRepository.save(newStudent);
-        });
+    public Student updateStudent(Student newStudent) {
+        return studentRepository.save(newStudent);
+
     }
 
     public void deleteStudent(Long studentId) {

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smarterschedule.server.student.Student;
 import com.smarterschedule.server.user.User;
 import com.smarterschedule.server.user.UserService;
 
@@ -25,6 +26,13 @@ public class AvailabilityService {
             defaultAvailability.add(availability);
         }
         return availabilityRepository.saveAll(defaultAvailability);
+    }
+
+    public List<Availability> createAvailability(Student student, List<Availability> availability) {
+        for (Availability eachAvailability : availability) {
+            eachAvailability.setStudent(student);
+        }
+        return availabilityRepository.saveAll(availability);
     }
 
     public List<Availability> getAvailability(String uid) {
