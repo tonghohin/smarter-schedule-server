@@ -20,7 +20,7 @@ public class Availability {
     @Column(name = "availability_id")
     private @Id @GeneratedValue Long id;
 
-    @Column(name = "day_of_week", nullable = false)
+    @Column(name = "day_of_week", nullable = false, updatable = false)
     private Integer day;
 
     @Column(name = "from_time")
@@ -33,12 +33,12 @@ public class Availability {
     private Boolean available;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = true)
+    @JoinColumn(name = "user_id", nullable = true, updatable = false)
     @JsonIgnore
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "student_id", nullable = true)
+    @JoinColumn(name = "student_id", nullable = true, updatable = false)
     @JsonIgnore
     private Student student;
 

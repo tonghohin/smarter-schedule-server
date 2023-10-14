@@ -14,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 
 @Entity
@@ -31,11 +32,12 @@ public class Student {
     @Column(name = "email", nullable = false)
     private String email;
 
-    @OneToMany(mappedBy = "student", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    @OrderBy("day ASC")
     private List<Availability> availability;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, updatable = false)
     @JsonIgnore
     private User user;
 

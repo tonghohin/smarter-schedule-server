@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 
 @Entity
@@ -29,6 +30,7 @@ public class User {
     private String phone;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OrderBy("day ASC")
     private List<Availability> availability;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)

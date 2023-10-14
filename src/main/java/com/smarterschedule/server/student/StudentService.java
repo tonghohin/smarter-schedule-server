@@ -20,13 +20,8 @@ public class StudentService {
         return student.orElseThrow(() -> new StudentNotFoundException(studentId));
     }
 
-    public Student createStudent(Student newStudent) {
+    public Student createOrUpdateStudent(Student newStudent) {
         return studentRepository.save(newStudent);
-    }
-
-    public Student updateStudent(Student newStudent) {
-        return studentRepository.save(newStudent);
-
     }
 
     public void deleteStudent(Long studentId) {

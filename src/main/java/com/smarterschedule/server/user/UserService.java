@@ -31,18 +31,8 @@ public class UserService {
         return user.getId();
     }
 
-    public User createUser(User newUser) {
+    public User createOrUpdateUser(User newUser) {
         return userRepository.save(newUser);
-    }
-
-    public User updateUser(User newUser, String uid) {
-        return userRepository.findByUid(uid).map(user -> {
-            user.setName(newUser.getName());
-            user.setPhone(newUser.getPhone());
-            return userRepository.save(user);
-        }).orElseGet(() -> {
-            return userRepository.save(newUser);
-        });
     }
 
 }

@@ -1,7 +1,5 @@
 package com.smarterschedule.server.user;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,14 +20,9 @@ public class UserController {
     @Autowired
     private AvailabilityService availabilityService;
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
     @PostMapping
     public User createUser(@RequestBody User newUser) {
-        User createdUser = userService.createUser(newUser);
+        User createdUser = userService.createOrUpdateUser(newUser);
         availabilityService.createDefaultAvailability(createdUser);
         return createdUser;
     }
@@ -39,9 +32,9 @@ public class UserController {
         return userService.getUserByUid(uid);
     }
 
-    @PutMapping("/{uid}")
-    public User updateUser(@RequestBody User newUser, @PathVariable String uid) {
-        return userService.updateUser(newUser, uid);
+    @PutMapping
+    public User updateUser(@RequestBody User user) {
+        return userService.createOrUpdateUser(user);
     }
 
 }

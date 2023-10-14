@@ -8,15 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.smarterschedule.server.student.Student;
 import com.smarterschedule.server.user.User;
-import com.smarterschedule.server.user.UserService;
 
 @Service
 public class AvailabilityService {
     @Autowired
     private AvailabilityRepository availabilityRepository;
-
-    @Autowired
-    private UserService userService;
 
     public List<Availability> createDefaultAvailability(User user) {
         List<Availability> defaultAvailability = new ArrayList<>();
@@ -32,15 +28,6 @@ public class AvailabilityService {
         for (Availability eachAvailability : availability) {
             eachAvailability.setStudent(student);
         }
-        return availabilityRepository.saveAll(availability);
-    }
-
-    public List<Availability> getAvailability(String uid) {
-        Long userId = userService.getUserIdByUid(uid);
-        return availabilityRepository.findByUserIdOrderByDayAsc(userId);
-    }
-
-    public List<Availability> updateAvailability(List<Availability> availability) {
         return availabilityRepository.saveAll(availability);
     }
 

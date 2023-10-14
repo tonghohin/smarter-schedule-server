@@ -34,7 +34,7 @@ public class StudentController {
         Student student = new Student(newStudent.getName(), newStudent.getPhone(), newStudent.getEmail());
         User user = userService.getUserByUid(uid);
         student.setUser(user);
-        Student createdStudent = studentService.createStudent(student);
+        Student createdStudent = studentService.createOrUpdateStudent(student);
         List<Availability> availability = newStudent.getAvailability();
         availabilityService.createAvailability(createdStudent, availability);
         return createdStudent;
@@ -48,7 +48,7 @@ public class StudentController {
 
     @PutMapping
     public Student updateStudent(@RequestBody Student newStudent) {
-        return studentService.updateStudent(newStudent);
+        return studentService.createOrUpdateStudent(newStudent);
     }
 
     @DeleteMapping("/{studentId}")
