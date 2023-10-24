@@ -3,6 +3,7 @@ package com.smarterschedule.server.user;
 import java.util.List;
 
 import com.smarterschedule.server.availability.Availability;
+import com.smarterschedule.server.lesson.Lesson;
 import com.smarterschedule.server.student.Student;
 
 import jakarta.persistence.CascadeType;
@@ -35,6 +36,9 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Student> students;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Lesson> lessons;
 
     User() {
     }

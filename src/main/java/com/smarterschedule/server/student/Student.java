@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.smarterschedule.server.availability.Availability;
+import com.smarterschedule.server.lesson.Lesson;
 import com.smarterschedule.server.user.User;
 
 import jakarta.persistence.CascadeType;
@@ -35,6 +36,9 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @OrderBy("day ASC")
     private List<Availability> availability;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Lesson> lessons;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
