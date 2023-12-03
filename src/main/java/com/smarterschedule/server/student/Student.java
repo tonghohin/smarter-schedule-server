@@ -33,6 +33,9 @@ public class Student {
     @Column(name = "email", nullable = false)
     private String email;
 
+    @Column(name = "active", nullable = false, columnDefinition = "boolean default true")
+    private boolean active;
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     @OrderBy("day ASC")
     private List<Availability> availability;
@@ -100,6 +103,22 @@ public class Student {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public List<Lesson> getLessons() {
+        return lessons;
+    }
+
+    public void setLessons(List<Lesson> lessons) {
+        this.lessons = lessons;
     }
 
     @Override
